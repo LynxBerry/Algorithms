@@ -1,46 +1,59 @@
-//
-//  main.cpp
-//  Test
-//
-//  Created by Steven Shao on 3/26/16.
-//  Copyright © 2016 Steven Shao. All rights reserved.
-//
-// MergeSort
-
+/*
+    C++ version implementation for Merge Sort
+    C++ 11
+    Created in Xcode
+    -Steven Shao
+ 
+ 
+ */
 
 
 
 #include <iostream>
 
-void mergeArray(const int* first, int sizeFirst, const int* second, int sizeSecond, int* final, int sizeFinal)
+//typedef int* bigint;
+
+/*
+ Purpose: Merge the two given arrays into one sorted array
+ Param List:
+    first: first array (const)
+    sizeFirst: length of first array
+    second: second array (const)
+    sizeSecond: length of second array
+    final: finally resulted array
+    sizeFinal: length of final array
+ */
+
+void mergeArray(const int*  first, int sizeFirst, const int* second, int sizeSecond, int* final, int sizeFinal)
 {
     //indicator for first array
     int i = 0;
-
+    
     //indicator for second array
     int j = 0;
-
+    
     //indicator for 3rd array
     int k = 0;
-
+    
+    //Take element from array first and second and put it into final.
     while ( i < sizeFirst && j < sizeSecond)
     {
-        if (first[i] < second[j])
-        {
-            final[k] = first[i];
-            i++;
-        }
-        else
+        if (second[j] < first[i])
         {
             final[k] = second[j];
             j++;
         }
-
+        else
+        {
+            final[k] = first[i];
+            i++;
+        }
+        
         k++;
-
+        
     }
-
-    if (i == sizeFirst)
+    
+    if (i == sizeFirst) // no elements remain in the first array.
     {
         //copy remaining elements from array Second to array Final
         while ( k < sizeFinal)
@@ -50,7 +63,7 @@ void mergeArray(const int* first, int sizeFirst, const int* second, int sizeSeco
             k++;
         }
     }
-    else
+    else // no elements remain in the second array.
     {
         //copy remaining elements from array First to array Final
         while (k < sizeFinal)
@@ -60,40 +73,48 @@ void mergeArray(const int* first, int sizeFirst, const int* second, int sizeSeco
             k++;
         }
     }
-
-
+    
+    
 }
 
-
-void mergeSort(int a[], int size)
+/* Merge Sort Recursive Function
+   Param List:
+   array: input array for merge sort. It will be modified on the fly.
+   size: length of array
+*/
+void mergeSort(int array[], int size)
 {
+    //at least two. otherwise do nothing.
     if (size > 1)
     {
+        //divide the array into two.
         int sizeFirst = size/2;
         int sizeSecond = size - sizeFirst;
-
+    
+        //allocate storage for divided arrays.
         int *first = new int[sizeFirst];
         int *second = new int[sizeSecond];
-
+    
         for (int i = 0; i < sizeFirst; i++)
         {
-            first[i] = a[i];
+            first[i] = array[i];
         }
-
+    
         for (int j = 0; j < sizeSecond; j++)
         {
-            second[j] = a[sizeFirst + j];
+            second[j] = array[sizeFirst + j];
         }
-
+    
         mergeSort(first, sizeFirst);
         mergeSort(second, sizeSecond);
-
-        mergeArray(first, sizeFirst, second, sizeSecond, a, size);
-
+    
+        mergeArray(first, sizeFirst, second, sizeSecond, array, size);
+    
+        //free the storage, because first and second are useless now.
         delete [] first;
         delete [] second;
     }
-
+    
 }
 
 
@@ -101,11 +122,11 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     //Init an array
     int a[] = {3,45,23,11,76,85};
-
+    
     mergeSort(a, 6);
+  
 
-
-    //printPostorder(BiTree);
-    //std::cout << a[i];
     return 0;
 }
+
+

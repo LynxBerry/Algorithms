@@ -8,10 +8,7 @@
  */
 
 
-
 #include <iostream>
-
-//typedef int* bigint;
 
 /*
  Purpose: Merge the two given arrays into one sorted array

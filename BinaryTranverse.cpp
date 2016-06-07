@@ -77,6 +77,7 @@ int main(int argc, const char * argv[]) {
     BiTree->right->left = NewNode(7);
 
     printInorder(BiTree);
+    
     //printPostorder(BiTree);
     return 0;
 }

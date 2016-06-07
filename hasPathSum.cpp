@@ -9,8 +9,6 @@
 // printInorder()
 // int hasPathSum(struct node* node, int sum)
 
-
-
 #include <iostream>
 
 struct node {
@@ -19,7 +17,7 @@ struct node {
     struct node* right;
 };
 
-//helper function
+// helper function
 struct node* NewNode(int data) {
     struct node* node = new (struct node);    // "new" is like "malloc"
     node->data = data;
@@ -30,11 +28,8 @@ struct node* NewNode(int data) {
 }
 
 
-void printInorder(struct node* node)
-{
-
-    if (node)
-    {
+void printInorder(struct node* node) {
+    if (node) {
         /* this part is not needed actually
         if (node->left == NULL)
         {

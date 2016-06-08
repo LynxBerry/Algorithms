@@ -2,7 +2,7 @@
 // 1 + 2 + 3 + 45 + 6 + 7 + 8 + 9
 
 //It is not best solution.
-function sum100(n: number, path: string, op: string):void {
+function sum100(n: number, path: string):void {
     if ( n == 9) {
         if(eval(path + "+" + n.toString()) == 100)
         {
@@ -23,27 +23,18 @@ function sum100(n: number, path: string, op: string):void {
 
     } else {
         if (n == 1) {
-            sum100(n + 1, "1", "");
+            sum100(n + 1, "1");
 
         } else {
-            if (eval(path + "+" + n.toString()) < 100)
-            {
-                sum100(n + 1, path + "+" + n.toString(), "+");
-            };
-
-            if(eval(path + n.toString()) < 100)
-            {
-                sum100(n + 1, path + n.toString(), "");
-
-            }
-
-            sum100(n + 1, path + "-" + n.toString(), "-");
-            
-
+            sum100(n + 1, path + "+" + n.toString());
+            sum100(n + 1, path + n.toString());
+            sum100(n + 1, path + "-" + n.toString());
         }
 
     }
 
 }
 
-sum100(1,"","");
+
+console.log("first solution:");
+sum100(1,"");

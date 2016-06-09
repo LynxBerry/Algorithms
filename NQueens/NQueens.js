@@ -75,5 +75,5 @@ var solveNQueens = function (n) {
     NQueen(0, blankboard);
     return solutions;
 };
-console.log(solveNQueens(8));
+console.log(solveNQueens(13));
 //# sourceMappingURL=NQueens.js.map

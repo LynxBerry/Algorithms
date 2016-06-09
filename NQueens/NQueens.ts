@@ -98,4 +98,4 @@ let solveNQueens = function(n) {
     return solutions;
 };
 
-console.log(solveNQueens(8));
+console.log(solveNQueens(13));

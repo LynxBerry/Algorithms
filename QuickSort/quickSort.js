@@ -38,8 +38,8 @@ function quickSort(array) {
         array.pop();
     }
 }
-var array = [56, 4, 123, 4, 2, 56, 87, 23, 56, 33, 68, 245, 4, 77];
-console.log("Before: %s", array);
+var array = [56, 6, 123, 5, 2, 46, 87, 23, 56, 33, 68, 245, 4, 77];
+console.log("Before:", array);
 quickSort(array);
-console.log("After: %s", array);
+console.log("After: ", array);
 //# sourceMappingURL=quickSort.js.map

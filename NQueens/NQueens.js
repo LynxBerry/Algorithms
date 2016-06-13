@@ -75,5 +75,9 @@ var solveNQueens = function (n) {
     NQueen(0, blankboard);
     return solutions;
 };
-console.log(solveNQueens(13));
+console.log(solveNQueens(8));
+for (var i = 0; i < 10; i++) {
+    console.log("%d Queen: %d", i + 1, solveNQueens(i + 1).length);
+}
+console.log("The end.");
 //# sourceMappingURL=NQueens.js.map

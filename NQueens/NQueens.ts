@@ -4,7 +4,7 @@ let solveNQueens = function(n) {
     function createChessBoard(n: number) {
         let chessBoard: string[][] = [];
         let newArray = new Array(n);
-        for(let i = 0; i < n; i++) { newArray[i] = '_' }
+        for(let i = 0; i < n; i++) { newArray[i] = '_'; }
 
         for (let i = 0; i < n; i++ ) {
             chessBoard.push(newArray.slice(0));
@@ -98,4 +98,8 @@ let solveNQueens = function(n) {
     return solutions;
 };
 
-console.log(solveNQueens(13));
+console.log(solveNQueens(8));
+for(let i = 0; i < 10; i++) {
+    console.log("%d Queen: %d", i+1, solveNQueens(i+1).length);
+}
+console.log("The end.");

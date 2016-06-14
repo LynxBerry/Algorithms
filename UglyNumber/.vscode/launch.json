@@ -5,7 +5,7 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/uglyNumber.js",
+            "program": "${workspaceRoot}/SuperUglyNumber.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",

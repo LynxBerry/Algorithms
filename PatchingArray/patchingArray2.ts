@@ -71,42 +71,66 @@ let minPatches4 = function(nums: number[], n: number): number {
     let patchCount = 0;
     if (n > 0) {
         let i = 0;
-        let sum = 0; //starting from 0; still needs sum.
+        let FirstN = 1; //the first possible FirstN should be 1.
         while(true) {
-            if ( !nums[i] ) { // if next element not exist or sum + 1 < next element
-                if (sum !== 0) {
-                    patchCount += Math.ceil(Math.log(n/sum)/Math.log(2));
-                    break;
-                }
-                patchCount += Math.floor(Math.log(n)/Math.log(2)) + 1;
-                break;
-            } else if (n <= nums[i]) { // if nums[i] exists
-                    if (sum === 0) {
-                        patchCount += Math.ceil(Math.log(n)/Math.log(2));
-                    } else {
-                        patchCount += Math.ceil(Math.log(n/sum)/Math.log(2));
-                    }
-
+            if(!(nums[i]) || FirstN < nums[i]) {
+                if ( nums[i] && n >= nums[i]) {
+                    let count = Math.ceil(Math.log(nums[i]/FirstN)/Math.log(2));
+                    patchCount += count;
+                    //Calculate next possible FirstN.
+                    FirstN = FirstN * Math.pow(2, count) + nums[i]
+                             /*LastN x 2 */
+                    i++;
+                } else { // n < nums[i] or nums[i] not exists; no need to calcuate next FirstN.
+                    patchCount += Math.floor(Math.log(n/FirstN)/Math.log(2)) + 1;
                     break;
 
-            } else if (nums[i] < n) {
-                if ( sum <= nums[i]) {
-                    let count = 0;
-                    if (sum === 0) {
-                        count = Math.ceil(Math.log(nums[i])/Math.log(2));
-                        patchCount += count;
-                    } else {
-                        count = Math.ceil(Math.log(nums[i]/sum)/Math.log(2));
-                        patchCount += count;
-                    }
-                    sum = sum  * Math.pow(2, count) + nums[i] + 1;
-
-                } else { // >=
-                    sum += nums[i] + 1;
                 }
+
+            } else { // nums[i] exits and FirstN >= nums[i]
+                //Calculate next possible FirstN.
+                FirstN += nums[i];
                 i++;
             }
-  
+
+            if(FirstN >= n) {break;}
+      
+        }
+
+        
+
+        return patchCount;
+
+    }
+    return null;
+
+    
+}
+
+/*
+console.log("test4");
+console.log(minPatches4([1, 2, 31, 33], 2147483647));
+console.log(minPatches4([1, 5, 10], 20));
+console.log(minPatches4([1,2,3],2147483647)); // 29
+console.log(minPatches4([],8)); // 4
+console.log(minPatches4([1,3],2147483647)); // 30
+*/
+
+
+let minPatches3_1 = function(nums: number[], n: number): number {
+    let patchCount = 0;
+    if (n > 0) {
+        let i = 0;
+        let sum = 0; //starting from 0;
+        while(sum < n) {
+            if ( (!nums[i]) || (sum + 1 < nums[i])) { // if next element not exist or sum + 1 < next element
+                sum = ((sum << 1) >>> 0) + 1;
+                patchCount++;
+            } else { // next element exist && sum + 1 >= next element
+                sum += nums[i];
+                i++;
+            }
+            //if (sum >= n) { break; }
 
         }
         //console.log(copyNums);
@@ -118,7 +142,11 @@ let minPatches4 = function(nums: number[], n: number): number {
     
 }
 
-console.log("test4");
-//console.log(minPatches4([1, 2, 31, 33], 2147483647));
-//console.log(minPatches4([1, 5, 10], 20));
-console.log(minPatches4([1,2,3],2147483647)); // 29
+
+console.log("test5");
+console.log(minPatches3_1([1, 2, 31, 33], 2147483647));
+console.log(minPatches3_1([1, 5, 10], 20));
+console.log(minPatches3_1([1,2,3],2147483647)); // 29
+console.log(minPatches3_1([],8)); // 4
+console.log(minPatches3_1([1,3],2147483647)); // 30
+console.log(minPatches3_1([],2147483647));

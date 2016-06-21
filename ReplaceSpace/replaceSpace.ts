@@ -1,13 +1,42 @@
-let sentence: String = new String("We are happy.");
+class MyString {
+    private text: string[];
+    constructor(text: string) {
+        this.text = new Array(text.length);
+        for (let i = 0; i < text.length; i++) {
+            this.text[i] = text[i]; 
+        }
+    }
 
-let token: string = "%20";
+    public setItem(index: number, char: string):void {
+        this.text[index] = char; 
+    }
+
+    public getItem(index: number): string {
+        return this.text[index];
+    }
+
+    public toString() {
+        return this.text.join('');
+    }
+
+    get length(): number {
+        return this.text.length;
+
+    }
+}
 
 
-function replaceWithToken(sentence: String, token: string) {
+let sentence = new MyString("We are happy.");
+
+let token = new MyString("%20");
+
+
+function replaceWithToken(sentence: MyString, token: MyString) {
     //scan sentence and calculate new length.
+    // The token.length should not < 2;
     let newlength = sentence.length;
     for (let i = 0; i < sentence.length; i++) {
-        if (sentence[i] === ' ') { // equals space.
+        if (sentence.getItem(i) === ' ') { // equals space.
             newlength += token.length - 1;
         }
 
@@ -17,16 +46,16 @@ function replaceWithToken(sentence: String, token: string) {
     let p2 = newlength - 1;
 
     while ( p1 >= 0) {
-        if (sentence[p1] === ' ') {
+        if (sentence.getItem(p1) === ' ') {
             //p2--;
             for (let i = token.length -1; i >= 0; i--) {
-                sentence[p2] = token[i];
+                sentence.setItem(p2,token.getItem(i));
                 p2--;
             }
             p1--;
             if (p1 < 0) {break};
         }
-        sentence[p2] = sentence[p1];
+        sentence.setItem(p2, sentence.getItem(p1));
         p1--;
         p2--;
     }
@@ -37,4 +66,4 @@ function replaceWithToken(sentence: String, token: string) {
 }
 
 replaceWithToken(sentence, token);
-console.log(sentence);
+console.log(sentence.toString());

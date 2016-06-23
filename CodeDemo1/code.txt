@@ -1,0 +1,160 @@
+
+
+
+
+
+function sum
+{
+	param(
+		$n
+	)
+	
+	$sum = 1
+	
+	for($i = 2; $i -le $n; $i++)
+	{
+		$sum += $i
+	}
+	
+	$sum
+}
+
+function product
+{
+	param(
+		$n
+	)
+	
+	$product = 1
+	
+	for($i = 2; $i -le $n; $i++)
+	{
+		$product *= $i
+	}
+	
+	$product
+	
+}
+
+# Commons & differences
+
+
+function calc
+{
+	param(
+		$n,
+		$op
+	)
+	
+	$result = 1
+	
+	for($i = 2; $i -le $n; $i++)
+	{
+		# write-host "i $i"
+		$result = & $op $result $i
+	}
+	
+	$result
+	
+	
+}
+
+$add = {
+	param(
+		$a,
+		$b
+	)
+	
+	$a + $b
+	
+}
+
+$multiply = {
+    param(
+        $a,
+        $b
+    )
+
+    $a * $b
+
+}
+
+$otherop = {
+    param(
+        $a,
+        $b
+
+    )
+
+    "$a" + "$" + "$b"
+}
+
+
+function opsFactory
+{
+    param(
+        [string] $ops
+    )
+
+    {
+        param(
+            $a,
+            $b
+        )
+
+        "$a" + "$ops" + "$b"
+
+    }.GetNewClosure()
+
+}
+
+
+function addRec
+{
+    param(
+        $n
+    )
+
+    if ( $n -eq 1)
+    {
+        1
+    }
+    else
+    {
+        $n + $(addRec $($n - 1) )
+    }
+
+
+
+}
+
+
+
+# calc 3 $add
+
+calc 7 $multiply
+calc 7 $otherop
+
+$haha = opsFactory "#"
+$haha2 = opsFactory "%%%"
+
+calc 7 $haha
+calc 7 $haha2
+
+
+addRec 6
+
+function showFile
+{
+    param(
+        $folder
+    )
+
+    dir $folder | ?{ $_ -is [System.IO.DirectoryInfo]} | %{showFile $_.FullName}
+    dir $folder
+
+
+
+}
+
+showFile

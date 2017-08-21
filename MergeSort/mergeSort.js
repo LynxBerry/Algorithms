@@ -5,7 +5,6 @@
 function mergeArray(firstArray, secondArray) {
     var sizeFirst = firstArray.length;
     var sizeSecond = secondArray.length;
-    var sizeFinal = sizeFirst + sizeSecond;
     var newArray = [];
 
     var i = 0;

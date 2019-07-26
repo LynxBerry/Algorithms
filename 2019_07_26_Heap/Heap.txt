@@ -1,0 +1,53 @@
+namespace 2019_07_26
+{
+
+class Heap
+{
+	private int[] binaryTree;
+	private int countOfNodes;
+
+	private void swap([ref] int a,[ref] int b)
+	{
+		int temp = a;
+		a = b;
+		b = a;	
+	}
+
+	public Heap(int[] binaryTree)
+	{
+		this.binaryTree = binaryTree;
+		countOfNodes = binaryTree.length - 1; // the 0th element doesn't count.
+		
+	}
+
+	public void Heapify() 
+	{
+		// Start from the leaf nodes. Sift down process
+		for (i = countOfNodes; i >= 1; i--)
+		{
+			if (2 * i <= countOfNodes)
+			{
+				int indexOfMaxChildren = ((2 * i + 1 <= countOfNodes) && binaryTree[2 * i + 1] > binaryTree[]) ? (2 * i + 1) : (2 * i);
+				
+				if (binaryTree[indexOfMaxChildren] > binaryTree[i])
+				{
+					swap(binaryTree[indexOfMaxChildren], binaryTree[i]);
+				}
+					
+			}
+		}
+
+	
+	}
+
+	public void PrintHeap()
+	{
+		foreach(var n in binaryTree)
+		{
+			Console.Write($"{n} ");
+		}
+	}
+}
+
+}
+

@@ -9,11 +9,12 @@ namespace DataStructure
         private List<T> heap;
 
         private void Swap(int i, int j)
-	    {
+        {
             T temp = heap[i];
             heap[i] = heap[j];
 		    heap[j] = temp;	
-	    }
+            
+        }
 
         public Heap()
         {

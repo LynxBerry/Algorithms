@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using DataStructure;
 
-namespace Heap
+namespace Test
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int[] tree = { 0, 1, 2, 3, 4, 5, 6};
+            List<int> tree = new List<int>(){0, 1, 2, 3, 4, 5, 6};
 
-            Heap heap = new Heap(tree);
+            Heap<int> heap = new Heap<int>(tree);
             heap.PrintHeap(); // before
             heap.Heapify();
-            heap.PrintHeap(); // after
+            heap.Insert(7);
+            heap.Insert(18);
+            // Console.WriteLine(heap.Delete());
+            // heap.PrintHeap(); // after
+            heap.PrintHeapInTree();
         }
     }
 }

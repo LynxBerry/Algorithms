@@ -2,63 +2,163 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Heap
+namespace DataStructure
 {
-    class Heap
+    class Heap<T> where T : IComparable<T>
     {
-        private int[] binaryTree;
-        private int countOfNodes;
+        private List<T> heap;
 
-        private void swap(ref int a,ref int b)
+        private void Swap(int i, int j)
 	    {
-            int temp = a;
-            a = b;
-		    b = temp;	
+            T temp = heap[i];
+            heap[i] = heap[j];
+		    heap[j] = temp;	
 	    }
 
-        public Heap(int[] binaryTree)
+        public Heap()
         {
-            this.binaryTree = binaryTree;
-            countOfNodes = binaryTree.Length - 1; // the 0th element doesn't count.
+            heap = new List<T>(){default(T)};
+        }
+
+        public Heap(List<T> biTreeAsArrayExcludingZerothElement)
+        {
+            if (biTreeAsArrayExcludingZerothElement.Count == 0)
+            {
+                throw new Exception("Require at least one dummy head in the beginning.");
+            }
+            this.heap = biTreeAsArrayExcludingZerothElement;
 
         }
 
+        /* Process to build a heap */
         public void Heapify()
         {
-            // Start from the leaf nodes. Sift down process
-            for (int i = countOfNodes; i >= 1; i--)
+            int countHeapNodes = heap.Count - 1;
+            // Iterate through each Parent nodes, starting from the last Parent node. 
+            for (int lastParent = countHeapNodes / 2; lastParent >= 1; lastParent--)
             {
-                int j = i;
-                while (2 * j <= countOfNodes)
+                SiftDownNode(lastParent, countHeapNodes); // Sift down against each last Parent;                
+            }
+
+
+        }
+
+        public void Sort()
+        {
+            Heapify();
+            SoftDeleteOneByOne();
+        }
+
+        private void SiftDownNode(int parent, int countHeapNodes)
+        {
+                int leftChild = 2 * parent;
+                int rightChild = 2 * parent + 1;
+
+                // Sift down process. From parent to children, to children's children.
+                while (leftChild <= countHeapNodes) // It still has children, at least left child.
                 {
-                    int indexOfMaxChildren = ((2 * j + 1 <= countOfNodes) && (binaryTree[2 * j + 1] > binaryTree[2 * j])) ? (2 * j + 1) : (2 * j);
+                    int maxChild = leftChild;
+                    if ((rightChild <= countHeapNodes) && // It has right child also.
+                        (heap[rightChild].CompareTo(heap[leftChild]) > 0)) // And the value of right child is strictly greater than the value of left child.
+                        maxChild = rightChild;
 
-                    if (binaryTree[indexOfMaxChildren] > binaryTree[j])
+                    if (heap[maxChild].CompareTo(heap[parent]) > 0) // Swap if there's a child larger than Parent.
                     {
-                        swap(ref binaryTree[indexOfMaxChildren], ref binaryTree[j]);
+                        Swap(maxChild, parent);
 
-                        j = indexOfMaxChildren;
+                        parent = maxChild;
+                        leftChild = 2 * parent;
+                        rightChild = 2 * parent + 1;
                     }
-                    else
+                    else // already heapified.
                     {
                         break;
                     }
 
                 }
+
+        }
+
+        public void Insert(T element)
+        {
+            heap.Add(element);
+            int insertedChild = heap.Count - 1;
+            int parent = insertedChild / 2;
+            int child = insertedChild;
+            while (parent >= 1)
+            {
+                if (heap[child].CompareTo(heap[parent]) <= 0) // already is heap
+                    break;
+                
+                Swap(child, parent);
+                child = parent;
+                parent = parent / 2;
+                
             }
 
+        }
 
+        private void SoftDeleteOneByOne()
+        {
+            int countHeapNodes = heap.Count - 1;
+
+            while (countHeapNodes > 1)
+            {
+                int lastNode = countHeapNodes;
+                Swap(1, lastNode);
+
+                SiftDownNode(1, countHeapNodes - 1);
+
+                countHeapNodes--;
+
+            }
+        }
+
+        public T Delete()
+        {
+            if (IsEmpty())
+                throw new Exception("Cannot delete from empty heap.");
+            T topNode = heap[1];
+            int lastNode = heap.Count - 1;
+            Swap(1, lastNode);
+            heap.RemoveAt(lastNode);
+
+            int countHeapNodes = heap.Count - 1;
+            SiftDownNode(1, countHeapNodes);
+
+            return topNode;
+
+        }
+
+        public bool IsEmpty()
+        {
+            return heap.Count - 1 <= 0;
         }
 
         public void PrintHeap()
         {
-            foreach (var n in binaryTree)
+            IEnumerator<T> e = heap.GetEnumerator();
+            e.MoveNext(); // skip the first one.
+            while (e.MoveNext())
             {
-                Console.Write($"{n} ");
+                Console.Write($"{e.Current} ");
             }
 
             Console.WriteLine();
 
+        }
+
+        public void PrintHeapInTree()
+        {
+            int i = 1;
+            while (i < heap.Count)
+            {
+                for (int j = i; j < i * 2 && j < heap.Count; j++)
+                    Console.Write($"{heap[j]} ");
+                Console.WriteLine();
+                i = i * 2;
+            }
+        
         }
 
 

@@ -6,6 +6,12 @@ namespace DataStructure
 {
     class Heap<T> where T : IComparable<T>
     {
+        public enum HeapType {
+            Mini,
+            Max
+        }
+
+        private HeapType type;
         private List<T> heap;
 
         private void Swap(int i, int j)
@@ -16,19 +22,25 @@ namespace DataStructure
             
         }
 
+        private int Compare(T first, T second)
+        {
+            return type == HeapType.Mini ? -(first.CompareTo(second)) : first.CompareTo(second);
+        }
+
         public Heap()
         {
             heap = new List<T>(){default(T)};
+            type = HeapType.Max;
         }
 
-        public Heap(List<T> biTreeAsArrayExcludingZerothElement)
+        public Heap(List<T> biTreeAsArrayExcludingZerothElement, HeapType type)
         {
             if (biTreeAsArrayExcludingZerothElement.Count == 0)
             {
                 throw new Exception("Require at least one dummy head in the beginning.");
             }
             this.heap = biTreeAsArrayExcludingZerothElement;
-
+            this.type = type;
         }
 
         /* Process to build a heap */
@@ -60,10 +72,10 @@ namespace DataStructure
                 {
                     int maxChild = leftChild;
                     if ((rightChild <= countHeapNodes) && // It has right child also.
-                        (heap[rightChild].CompareTo(heap[leftChild]) > 0)) // And the value of right child is strictly greater than the value of left child.
+                        (Compare(heap[rightChild], heap[leftChild]) > 0)) // And the value of right child is strictly greater than the value of left child.
                         maxChild = rightChild;
 
-                    if (heap[maxChild].CompareTo(heap[parent]) > 0) // Swap if there's a child larger than Parent.
+                    if (Compare(heap[maxChild], heap[parent]) > 0) // Swap if there's a child larger than Parent.
                     {
                         Swap(maxChild, parent);
 
@@ -86,9 +98,11 @@ namespace DataStructure
             int insertedChild = heap.Count - 1;
             int parent = insertedChild / 2;
             int child = insertedChild;
+
+            // Sift Up process
             while (parent >= 1)
             {
-                if (heap[child].CompareTo(heap[parent]) <= 0) // already is heap
+                if (Compare(heap[child], heap[parent]) <= 0) // already is heap
                     break;
                 
                 Swap(child, parent);
@@ -135,6 +149,7 @@ namespace DataStructure
         {
             return heap.Count - 1 <= 0;
         }
+
 
         public void PrintHeap()
         {

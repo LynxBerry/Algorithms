@@ -10,7 +10,7 @@ namespace Test
         {
             List<int> tree = new List<int>(){0, 1, 2, 3, 4, 5, 6};
 
-            Heap<int> heap = new Heap<int>(tree);
+            Heap<int> heap = new Heap<int>(tree, Heap<int>.HeapType.Max);
             heap.PrintHeap(); // before
             heap.Heapify();
             heap.Insert(7);

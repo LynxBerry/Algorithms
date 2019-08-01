@@ -6,27 +6,63 @@ namespace _2019_07_31_MaxSumOfSubarray
 {
     class MaxSumOfSubarray
     {
-        public static int caculateMaxSumOfSubarray(int[] array)
+        public static int CaculateMaxSumOfSubarray(int[] array)
         {
             if (array == null || array.Length < 1)
                 throw new Exception("invalid parameters.");
 
-            int curSum = array[0];
-            int curMax = curSum;
+            int curSumMax = array[0];
+            int globalSumMax = curSumMax;
 
             for (int i = 1; i < array.Length; i++)
             {
-                if (curSum <= 0)
-                    curSum = array[i];
+                if (curSumMax <= 0)
+                    curSumMax = array[i];
                 else
-                    curSum += array[i];
+                    curSumMax += array[i];
 
 
-                if (curSum > curMax)
-                    curMax = curSum;
+                if (curSumMax > globalSumMax)
+                    globalSumMax = curSumMax;
             }
 
-            return curMax;
+            return globalSumMax;
+
+        }
+
+        // Only get the first answer. not all of them.
+        public static Tuple<int, int> GetSubarrayOfMaxSum(int[] array)
+        {
+            if (array == null || array.Length < 1)
+                throw new Exception("Invalid Parameters.");
+
+            int curSumMax = array[0];
+            int globalSumMax = curSumMax;
+            int leftPointerToCurSubArray = 0;
+            int globalLeftPointer = 0;
+            int globalRightPointer = 0;
+
+            for (int rightPointerToCurSubArray = 1; rightPointerToCurSubArray < array.Length; rightPointerToCurSubArray++)
+            {
+                if (curSumMax <= 0)
+                {
+                    curSumMax = array[rightPointerToCurSubArray];
+                    leftPointerToCurSubArray = rightPointerToCurSubArray; // Since the curSumMax becomes array[rightPointerToCurSubArray], need to reset leftPointerToCurSubArray
+                }
+                else
+                    curSumMax += array[rightPointerToCurSubArray];
+
+                if (curSumMax > globalSumMax)
+                {
+                    globalSumMax = curSumMax;
+                    globalLeftPointer = leftPointerToCurSubArray;
+                    globalRightPointer = rightPointerToCurSubArray;
+
+                }
+                    
+            }
+
+            return new Tuple<int, int>(globalLeftPointer, globalRightPointer);
 
         }
     }

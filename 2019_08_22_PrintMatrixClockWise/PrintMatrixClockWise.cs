@@ -32,7 +32,7 @@ namespace _2019_08_22_PrintMatrixClockWise
 
         public static (int nextX, int nextY, int nextDirection)? PrintLine(int[][] matrix, int x, int y, int direction) // leftToRight: 0; upperToBottom: 1; rightToLeft: 2; bottomToTop: 3
         {
-            if ((matrix.Length & 1) == 1) // old
+            if ((matrix.Length & 1) == 1) // odd
             {
                 if (x == matrix.Length / 2 && y == matrix.Length / 2)
                     Console.Write($"{matrix[x][y]} ");

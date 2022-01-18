@@ -93,9 +93,9 @@ namespace BiTreeTraverse
                 {
                     while (stack.Count != 0)
                     {
-                        currentNode = stack.Pop();
-                        Console.WriteLine($"Visiting Node: {currentNode.Value}");
-                        currentNode = currentNode.Right;
+                        var nextNode = stack.Pop();
+                        Console.WriteLine($"Visiting Node: {nextNode.Value}");
+                        currentNode = nextNode.Right;
 
                         if (currentNode != null)
                         {

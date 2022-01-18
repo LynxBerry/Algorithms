@@ -25,7 +25,8 @@ namespace BiTreeTraverse
 
             Console.WriteLine("Pre-Order:");
             // PreOrderTraverse(root);
-            PreOrderTraverse2(root);
+            // PreOrderTraverse2(root);
+            PreOrderTraverse3(root);
             //12 -> 10 -> 8 -> 11 -> 15
 
             Console.WriteLine("In-Order:");
@@ -41,6 +42,37 @@ namespace BiTreeTraverse
 
             Console.ReadLine();
 
+
+        }
+
+        static void PreOrderTraverse3(BiTreeNode biTree)
+        {
+            if (biTree == null)
+            {
+                throw new Exception("Error: Input Tree cannot be null.");
+            }
+
+            var stack = new Stack<Tuple<string, BiTreeNode>>();
+
+            stack.Push(VisitActionItemGenerator.GenVisitTreeAction(biTree));
+
+            while (stack.Count != 0)
+            {
+                var (actionType, node) = stack.Pop();
+                switch (actionType)
+                {
+                    case "VisitNode":
+                        Console.WriteLine($"Visited Node: {node.Value}");
+                        break;
+                    case "VisitTree":
+                        if (node.Right != null)
+                            stack.Push(VisitActionItemGenerator.GenVisitTreeAction(node.Right));
+                        if (node.Left != null)
+                            stack.Push(VisitActionItemGenerator.GenVisitTreeAction(node.Left));
+                        stack.Push(VisitActionItemGenerator.GenVisitNodeAction(node));
+                        break;
+                }
+            }
 
         }
 

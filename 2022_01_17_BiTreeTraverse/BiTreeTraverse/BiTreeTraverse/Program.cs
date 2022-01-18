@@ -24,7 +24,8 @@ namespace BiTreeTraverse
             root.Left.Right = new BiTreeNode(11);
 
             Console.WriteLine("Pre-Order:");
-            PreOrderTraverse(root);
+            // PreOrderTraverse(root);
+            PreOrderTraverse2(root);
             //12 -> 10 -> 8 -> 11 -> 15
 
             Console.WriteLine("In-Order:");
@@ -35,8 +36,29 @@ namespace BiTreeTraverse
             PostOrderTraverse(root);
             //8 -> 11 -> 10 -> 15 -> 12
 
+            
+
+
             Console.ReadLine();
 
+
+        }
+
+        // Interesting Approach: Leveraging Closure and Stack
+        static void PreOrderTraverse2(BiTreeNode biTree)
+        {
+            if (biTree == null)
+            {
+                throw new Exception("Error: Input Tree cannot be null.");
+            }
+
+            var stack = new Stack<Action>();
+            stack.Push(VisitActionGenerator.GenVisitTreeActionPreOrder(biTree, stack));
+
+            while (stack.Count != 0)
+            {
+                stack.Pop()();
+            }
 
         }
 
